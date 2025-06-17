@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Prompt By Ramsky</title>
+    <title>Generator Prompt untuk ComfyUI dengan Gemini</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,6 +64,14 @@
             transform: translateY(20px) scale(0.95);
             pointer-events: none;
         }
+
+        @keyframes text-loop-animation {
+            0%, 100% { opacity: 0; transform: translateY(10px); }
+            50% { opacity: 1; transform: translateY(0); }
+        }
+        .chat-prompt-text {
+            animation: text-loop-animation 4s ease-in-out infinite;
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-200 antialiased">
@@ -73,8 +81,8 @@
 
         <!-- Header -->
         <header class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-white">Generator Prompt By Ramsky</h1>
-            <p class="text-gray-400 mt-2">Sempurnakan ide Anda dari Bahasa Indonesia ke prompt Bahasa Inggris dengan sekali klik.</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-white">Generator Prompt untuk ComfyUI dengan Gemini</h1>
+            <p class="text-gray-400 mt-2">Sempurnakan ide Anda dari Bahasa Indonesia ke prompt Bahasa Inggris yang detail dan utuh.</p>
         </header>
 
         <!-- Form Section -->
@@ -192,6 +200,11 @@
         </div>
     </div>
 
+    <!-- Looping Chat Prompt Text -->
+    <div id="chat-prompt-text" class="chat-prompt-text fixed bottom-28 right-8 bg-indigo-600 text-white text-sm font-semibold py-2 px-4 rounded-full shadow-lg z-50 pointer-events-none">
+        Bingung? Chat ramsky di sini
+    </div>
+
     <!-- Live Chat Button -->
     <button id="chat-toggle-button" class="fixed bottom-8 right-8 bg-indigo-600 text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center text-3xl z-50 transition-transform transform hover:scale-110 pulse-button">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -202,7 +215,7 @@
     <!-- Chatbox Window -->
     <div id="chat-window" class="hidden fixed bottom-28 right-8 w-full max-w-md bg-gray-800 rounded-2xl shadow-2xl border border-gray-700 z-40 flex flex-col" style="height: 60vh;">
         <header class="bg-gray-700 p-4 rounded-t-2xl flex justify-between items-center">
-            <h3 class="font-semibold text-lg text-white">Chat dengan Ramsky</h3>
+            <h3 class="font-semibold text-lg text-white">Chat dengan AI Gemini</h3>
             <button id="close-chat-button" class="text-gray-400 hover:text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -336,6 +349,7 @@ Combine all of these into a master prompt. Start with quality keywords like 'mas
         const chatForm = document.getElementById('chat-form');
         const chatInput = document.getElementById('chat-input');
         const chatMessages = document.getElementById('chat-messages');
+        const chatPromptText = document.getElementById('chat-prompt-text');
         const chatHistory = [];
         const chatSystemInstruction = {
             role: "user", 
@@ -346,8 +360,10 @@ Combine all of these into a master prompt. Start with quality keywords like 'mas
             const isHidden = chatWindow.classList.contains('hidden');
             if (isHidden) {
                 chatWindow.classList.remove('hidden');
+                chatPromptText.classList.add('hidden'); // Hide prompt text when chat is open
             } else {
                 chatWindow.classList.add('hidden');
+                chatPromptText.classList.remove('hidden'); // Show prompt text when chat is closed
             }
         }
 
