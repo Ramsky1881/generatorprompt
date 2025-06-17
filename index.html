@@ -91,6 +91,18 @@
                                 <option value="medium shot">Jarak Menengah</option>
                             </select>
                         </div>
+                        <div class="md:col-span-2">
+                            <label for="pose-select" class="block text-sm font-medium text-gray-300 mb-2">Pose</label>
+                            <select id="pose-select" class="w-full bg-gray-700 border border-gray-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                <option value="standing, elegant pose">Berdiri, Pose Elegan</option>
+                                <option value="action pose, dynamic pose">Pose Aksi, Dinamis</option>
+                                <option value="sitting, relaxed pose">Duduk, Pose Santai</option>
+                                <option value="walking, confident stride">Berjalan, Langkah Percaya Diri</option>
+                                <option value="crouching, ready to pounce">Meringkuk, Siap Menerkam</option>
+                                <option value="looking at viewer">Melihat ke arah penonton</option>
+                                <option value="looking away, contemplative pose">Melihat ke arah lain, Pose Merenung</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
@@ -170,6 +182,7 @@
             const artStyle = document.getElementById('art-style').value;
             const lighting = document.getElementById('lighting-select').value;
             const cameraAngle = document.getElementById('camera-select').value;
+            const pose = document.getElementById('pose-select').value;
 
             let completePositivePrompt = '';
 
@@ -185,6 +198,7 @@ User Inputs:
 - Art Style Keywords: "${artStyle}"
 - Lighting Style Keywords: "${lighting}"
 - Camera & Composition Keywords: "${cameraAngle}"
+- Pose Keywords: "${pose}"
 
 Combine all of these into a master prompt. Start with quality keywords like 'masterpiece, best quality', integrate the enhanced subject and details, and end with technical keywords like '8k, sharp focus, intricate details, cinematic'. Do not use full sentences. Only output the final, single, comma-separated English prompt string.`;
 
